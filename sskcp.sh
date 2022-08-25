@@ -34,11 +34,10 @@ yum install -y c-ares-devel
 yum install -y git
 yum install -y qrencode
 
-yum install -y python-setuptools net-tools
-
-easy_install pip
-
-pip install --upgrade pip shadowsocks
+wget --no-check-certificate https://github.com/shadowsocks/shadowsocks/archive/master.zip
+unzip -q master.zip
+cd master
+python setup.py install
 
 cat>/etc/systemd/system/shadowsocks-server.service<<EOF
 [Unit]
@@ -74,7 +73,7 @@ systemctl restart shadowsocks-server
 
 
 VERSION=20220628
-wget https://github.com/xtaci/kcptun/releases/download/v$VERSION/kcptun-linux-amd64-$VERSION.tar.gz
+wget --no-check-certificate https://github.com/xtaci/kcptun/releases/download/v$VERSION/kcptun-linux-amd64-$VERSION.tar.gz
 tar zxf kcptun-linux-amd64-$VERSION.tar.gz
 rm -f client_linux_amd64 kcptun-linux-amd64-$VERSION.tar.gz
 chmod a+x server_linux_amd64
