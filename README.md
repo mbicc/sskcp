@@ -1,10 +1,10 @@
-sudo -i
-systemctl stop firewalld.service
-systemctl disable firewalld.service
+<br>sudo -i
+<br>systemctl stop firewalld.service
+<br>systemctl disable firewalld.service
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/mbicc/sskcp/main/sskcp.sh)"
+<br>sh -c "$(curl -fsSL https://raw.githubusercontent.com/mbicc/sskcp/main/sskcp.sh)"
 
-systemctl status shadowsocks-server
-systemctl restart shadowsocks-server
-systemctl status kcp-server
-systemctl restart kcp-server
+<br>systemctl status shadowsocks-server
+<br>systemctl restart shadowsocks-server
+<br>systemctl status kcp-server
+<br>systemctl restart kcp-server
