@@ -47,5 +47,3 @@ install_dependencies(){
         done
     fi
 }
-
-esac
