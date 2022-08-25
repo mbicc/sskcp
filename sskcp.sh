@@ -4,7 +4,6 @@ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 yum update -y
 yum install -y wget
 yum install -y screen
-
 yum install -y epel-release
 yum install -y unzip
 yum install -y gzip
@@ -38,21 +37,7 @@ wget --no-check-certificate https://github.com/shadowsocks/shadowsocks/archive/m
 unzip -q master.zip
 cd shadowsocks-master
 python setup.py install
-
-cd
-
-cat>/etc/systemd/system/shadowsocks-server.service<<EOF
-[Unit]
-Description=Shadowsocks Server
-After=network.target
-
-[Service]
-ExecStart=/usr/bin/ssserver -c /etc/ss-config.json
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-EOF
+cd /
 
 cat>/etc/ss-config.json<<EOF
 {
@@ -67,6 +52,17 @@ cat>/etc/ss-config.json<<EOF
   "method":"aes-256-cfb",
   "fast_open": false
 }
+EOF
+
+cat>/etc/systemd/system/shadowsocks-server.service<<EOF
+[Unit]
+Description=Shadowsocks Server
+After=network.target
+[Service]
+ExecStart=/usr/bin/ssserver -c /etc/ss-config.json
+Restart=always
+[Install]
+WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
@@ -105,11 +101,9 @@ cat>/etc/systemd/system/kcp-server.service<<EOF
 [Unit]
 Description=Kcptun server
 After=network.target
-
 [Service]
 ExecStart=/usr/bin/server_linux_amd64 -c /etc/kcp-config.json
 Restart=always
-
 [Install]
 WantedBy=multi-user.target
 EOF
