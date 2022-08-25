@@ -117,3 +117,6 @@ EOF
 systemctl daemon-reload
 systemctl enable kcp-server
 systemctl restart kcp-server
+
+systemctl status shadowsocks-server
+systemctl status kcp-server
