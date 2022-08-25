@@ -36,8 +36,10 @@ yum install -y qrencode
 
 wget --no-check-certificate https://github.com/shadowsocks/shadowsocks/archive/master.zip
 unzip -q master.zip
-cd master
+cd shadowsocks-master
 python setup.py install
+
+cd
 
 cat>/etc/systemd/system/shadowsocks-server.service<<EOF
 [Unit]
