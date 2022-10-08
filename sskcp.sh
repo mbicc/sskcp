@@ -97,7 +97,7 @@ cat>/etc/kcp-config.json<<EOF
 }
 EOF
 
-cat>/etc/systemd/system/kcp-server.service<<EOF
+cat>/etc/systemd/system/kcptun-server.service<<EOF
 [Unit]
 Description=Kcptun server
 After=network.target
@@ -109,8 +109,8 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
-systemctl enable kcp-server
-systemctl restart kcp-server
+systemctl enable kcptun-server
+systemctl restart kcptun-server
 
 systemctl status shadowsocks-server
-systemctl status kcp-server
+systemctl status kcptun-server
