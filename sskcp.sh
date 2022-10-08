@@ -79,7 +79,7 @@ mv -f server_linux_amd64 /usr/bin
 
 cat>/etc/kcp-config.json<<EOF
 {
-  "listen": ":51888",
+  "listen": ":51999",
   "target": "127.0.0.1:443",
   "key": "veryfast",
   "crypt": "aes",
