@@ -6,5 +6,7 @@
 
 <br>systemctl status shadowsocks-server 
 <br>systemctl restart shadowsocks-server 
+<br>systemctl status kcp-server 
+<br>systemctl restart kcp-server 
 <br>systemctl status kcptun-server 
 <br>systemctl restart kcptun-server 
