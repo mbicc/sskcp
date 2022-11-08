@@ -39,12 +39,13 @@ cd shadowsocks-master
 python setup.py install
 cd /
 
-cat>/etc/ss-config.json<<EOF
+cat>/etc/shadowsocks-config.json<<EOF
 {
   "server":"0.0.0.0",
   "local_address": "127.0.0.1",
   "port_password":
   {
+    "69":"caocaocao"
     "443":"caocaocao"
   },
   "local_port":1080,
@@ -59,7 +60,7 @@ cat>/etc/systemd/system/shadowsocks-server.service<<EOF
 Description=Shadowsocks Server
 After=network.target
 [Service]
-ExecStart=/usr/bin/ssserver -c /etc/ss-config.json
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocks-config.json
 Restart=always
 [Install]
 WantedBy=multi-user.target
@@ -70,7 +71,7 @@ systemctl enable shadowsocks-server
 systemctl restart shadowsocks-server
 
 
-VERSION=20220628
+VERSION=20221015
 wget --no-check-certificate https://github.com/xtaci/kcptun/releases/download/v$VERSION/kcptun-linux-amd64-$VERSION.tar.gz
 tar zxf kcptun-linux-amd64-$VERSION.tar.gz
 rm -f client_linux_amd64 kcptun-linux-amd64-$VERSION.tar.gz
@@ -97,12 +98,47 @@ cat>/etc/kcp-config.json<<EOF
 }
 EOF
 
+cat>/etc/systemd/system/kcp-server.service<<EOF
+[Unit]
+Description=Kcp server
+After=network.target
+[Service]
+ExecStart=/usr/bin/server_linux_amd64 -c /etc/kcp-config.json
+Restart=always
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable kcp-server
+systemctl restart kcp-server
+
+cat>/etc/kcptun-config.json<<EOF
+{
+  "listen": ":69",
+  "target": "127.0.0.1:443",
+  "key": "veryfast",
+  "crypt": "aes",
+  "mode": "fast",
+  "mtu": 1350,
+  "sndwnd": 512,
+  "rcvwnd": 512,
+  "datashard": 10,
+  "parityshard": 3,
+  "dscp": 0,
+  "nocomp": true,
+  "quiet": false,
+  "tcp": false,
+  "pprof": false
+}
+EOF
+
 cat>/etc/systemd/system/kcptun-server.service<<EOF
 [Unit]
 Description=Kcptun server
 After=network.target
 [Service]
-ExecStart=/usr/bin/server_linux_amd64 -c /etc/kcp-config.json
+ExecStart=/usr/bin/server_linux_amd64 -c /etc/kcptun-config.json
 Restart=always
 [Install]
 WantedBy=multi-user.target
@@ -113,4 +149,5 @@ systemctl enable kcptun-server
 systemctl restart kcptun-server
 
 systemctl status shadowsocks-server
+systemctl status kcp-server
 systemctl status kcptun-server
