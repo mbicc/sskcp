@@ -73,7 +73,6 @@ systemctl restart shadowsocks-server
 VERSION=20221015
 wget --no-check-certificate https://github.com/xtaci/kcptun/releases/download/v$VERSION/kcptun-linux-amd64-$VERSION.tar.gz
 tar zxf kcptun-linux-amd64-$VERSION.tar.gz
-rm -f client_linux_amd64 kcptun-linux-amd64-$VERSION.tar.gz
 chmod a+x server_linux_amd64
 mv -f server_linux_amd64 /usr/bin
 
