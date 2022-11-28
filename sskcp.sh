@@ -45,7 +45,6 @@ cat>/etc/shadowsocks-config.json<<EOF
   "local_address": "127.0.0.1",
   "port_password":
   {
-    "69":"caocaocao"
     "443":"caocaocao"
   },
   "local_port":1080,
