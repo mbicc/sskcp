@@ -45,7 +45,7 @@ cat>/etc/shadowsocks-config.json<<EOF
   "local_address": "127.0.0.1",
   "port_password":
   {
-    "443":"caocaocao"
+    "443":"C%#&A*$#$^&^O%$@@!@$*"
   },
   "local_port":1080,
   "timeout":300,
@@ -70,7 +70,7 @@ systemctl enable shadowsocks-server
 systemctl restart shadowsocks-server
 
 
-VERSION=20220628
+VERSION=20221015
 wget --no-check-certificate https://github.com/xtaci/kcptun/releases/download/v$VERSION/kcptun-linux-amd64-$VERSION.tar.gz
 tar zxf kcptun-linux-amd64-$VERSION.tar.gz
 chmod a+x server_linux_amd64
@@ -78,10 +78,10 @@ mv -f server_linux_amd64 /usr/bin
 
 cat>/etc/kcptun-config.json<<EOF
 {
-  "listen": ":49989",
+  "listen": ":3000-60000",
   "target": "127.0.0.1:443",
-  "key": "veryfast",
-  "crypt": "aes",
+  "key": "C@#A^%ON@i@mei%$)",
+  "crypt": "aes-192",
   "mode": "fast",
   "mtu": 1350,
   "sndwnd": 512,
