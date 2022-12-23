@@ -78,7 +78,7 @@ mv -f server_linux_amd64 /usr/bin
 
 cat>/etc/kcptun-config.json<<EOF
 {
-  "listen": ":3000-60000",
+  "listen": ":38000-39000",
   "target": "127.0.0.1:443",
   "key": "C@#A^%ON@i@mei%$)",
   "crypt": "aes-192",
