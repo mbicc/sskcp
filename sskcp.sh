@@ -45,7 +45,7 @@ cat>/etc/shadowsocks-config.json<<EOF
   "local_address": "127.0.0.1",
   "port_password":
   {
-    "443":"C%#&A*$#$^&^O%$@@!@$*"
+    "443":"C%#2&A*$#5$^&^O%$"
   },
   "local_port":1080,
   "timeout":300,
@@ -80,7 +80,7 @@ cat>/etc/kcptun-config.json<<EOF
 {
   "listen": ":38000-39000",
   "target": "127.0.0.1:443",
-  "key": "C@#A^%ON@i@mei%$)",
+  "key": "C@#A2^%ON@4i@me3",
   "crypt": "aes-192",
   "mode": "fast",
   "mtu": 1350,
