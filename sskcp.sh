@@ -45,7 +45,7 @@ cat>/etc/shadowsocks-config.json<<EOF
   "local_address": "127.0.0.1",
   "port_password":
   {
-    "443":"C%#2&A*$#5$^&^O%$"
+    "443":"C%#2&A*05$^&^O%$"
   },
   "local_port":1080,
   "timeout":300,
