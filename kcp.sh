@@ -35,10 +35,10 @@ yum install -y qrencode
 
 
 VERSION=20230214
-wget --no-check-certificate https://github.com/xtaci/kcptun/releases/download/v$VERSION/kcptun-linux-amd64-$VERSION.tar.gz
-tar zxf kcptun-linux-amd64-$VERSION.tar.gz
-chmod a+x server_linux_amd64
-mv -f server_linux_amd64 /usr/bin
+wget --no-check-certificate https://github.com/xtaci/kcptun/releases/download/v$VERSION/kcptun-linux-arm64-$VERSION.tar.gz
+tar zxf kcptun-linux-arm64-$VERSION.tar.gz
+chmod a+x server_linux_arm64
+mv -f server_linux_arm64 /usr/bin
 
 cat>/etc/kcptun-config.json<<EOF
 {
@@ -66,7 +66,7 @@ cat>/etc/systemd/system/kcptun-server.service<<EOF
 Description=Kcptun server
 After=network.target
 [Service]
-ExecStart=/usr/bin/server_linux_amd64 -c /etc/kcptun-config.json
+ExecStart=/usr/bin/server_linux_arm64 -c /etc/kcptun-config.json
 Restart=always
 [Install]
 WantedBy=multi-user.target
