@@ -73,6 +73,9 @@ systemctl restart shadowsocks-server
 VERSION=20230214
 wget --no-check-certificate https://github.com/xtaci/kcptun/releases/download/v$VERSION/kcptun-linux-amd64-$VERSION.tar.gz
 wget --no-check-certificate https://github.com/xtaci/kcptun/releases/download/v$VERSION/kcptun-linux-arm64-$VERSION.tar.gz
+tar zxf kcptun-linux-amd64-$VERSION.tar.gz
+chmod a+x server_linux_amd64
+mv -f server_linux_amd64 /usr/bin
 tar zxf kcptun-linux-arm64-$VERSION.tar.gz
 chmod a+x server_linux_arm64
 mv -f server_linux_arm64 /usr/bin
@@ -83,17 +86,29 @@ cat>/etc/kcptun-config.json<<EOF
   "target": "127.0.0.1:443",
   "key": "jj3G83hkds",
   "crypt": "aes",
-  "mode": "fast",
-  "mtu": 1350,
-  "sndwnd": 512,
-  "rcvwnd": 512,
+  "conn": 60,
+  "mode": "manual",
+  "nodelay": 1,
+  "interval": 20,
+  "resend": 2,
+  "nc": 1,
+  "mtu": 1450,
+  "sndwnd": 4096,
+  "rcvwnd": 2048,
   "datashard": 10,
   "parityshard": 3,
   "dscp": 46,
   "nocomp": true,
+  "sockbuf": 10485760,
+  "smuxver": 2,
+  "smuxbuf": 10485760,
+  "streambuf": 10485760,
+  "keepalive": 10,
+  "quiet": true,
+
+  "autoexpire": 30,
+  "scavengettl": 120,
   "acknodelay": true,
-  "quiet": false,
-  "tcp": false,
   "pprof": false
 }
 EOF
@@ -109,9 +124,56 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 
+cat>/etc/kcptun-android.json<<EOF
+{
+  "listen": ":51000-52000",
+  "target": "127.0.0.1:443",
+  "key": "jj3G83hkds",
+  "crypt": "aes",
+  "conn": 60,
+  "mode": "manual",
+  "nodelay": 1,
+  "interval": 20,
+  "resend": 2,
+  "nc": 1,
+  "mtu": 1450,
+  "sndwnd": 4096,
+  "rcvwnd": 2048,
+  "datashard": 10,
+  "parityshard": 3,
+  "dscp": 46,
+  "nocomp": true,
+  "sockbuf": 10485760,
+  "smuxver": 1,
+  "smuxbuf": 10485760,
+  "streambuf": 10485760,
+  "keepalive": 10,
+  "quiet": true,
+
+  "autoexpire": 30,
+  "scavengettl": 120,
+  "acknodelay": true,
+  "pprof": false
+}
+EOF
+
+cat>/etc/systemd/system/kcptun-android.service<<EOF
+[Unit]
+Description=Kcptun Android
+After=network.target
+[Service]
+ExecStart=/usr/bin/server_linux_arm64 -c /etc/kcptun-android.json
+Restart=always
+[Install]
+WantedBy=multi-user.target
+EOF
+
 systemctl daemon-reload
 systemctl enable kcptun-server
 systemctl restart kcptun-server
+systemctl enable kcptun-android
+systemctl restart kcptun-android
 
 systemctl status shadowsocks-server
 systemctl status kcptun-server
+systemctl status kcptun-android
